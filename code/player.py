@@ -1,14 +1,18 @@
 import pygame
 from pygame.sprite import Group
 from settings import *
+from support import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, group):
         super().__init__(group)
 
+        self.import_assets()
+        self.status = 'left_idle'
+        self.frame_index = 0
+
         #general setup
-        self.image = pygame.Surface((32,64))
-        self.image.fill('green')
+        self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(center = pos)
 
         #Movement attributes
@@ -16,6 +20,12 @@ class Player(pygame.sprite.Sprite):
         self.pos = pygame.math.Vector2(self.rect.center)
         self.speed = 200
 
+    def import_assets(self):
+        self.animations = {'up': [], 'down': [], 'left': [], 'right': [], 'up_idle': [], 'down_idle': [], 'left_idle': [], 'right_idle': []}
+
+        for animation in self.animations.keys():
+            full_path = '../graphics/character/' + animation
+            self.animations[animation] = import_folder(full_path)
     def input(self):
         keys = pygame.key.get_pressed()
         
