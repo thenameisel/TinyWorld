@@ -59,8 +59,11 @@ class Player(pygame.sprite.Sprite):
         #print(self.direction.x, self.direction.y)
 
     def get_status(self):
+        #checks to see if the player has stopped moving
         if self.direction.magnitude() == 0:
             self.status = self.status.split('_')[0] + '_idle'
+
+        #future tool use will go here
 
     def move(self, dt):
         if self.direction.magnitude() > 0:    
